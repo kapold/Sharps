@@ -1,30 +1,86 @@
 ﻿using System;
 using System.Net.Mime;
 using System.Text;
+using Microsoft.VisualBasic.CompilerServices;
 
-namespace ConsoleApp1
+namespace LW2
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // 1a
-              bool TF = true;
-              byte by = 254;
-              char x = 'x';
-              decimal y = 453463234;
-              double z = 3253434634.324;
-              float p = 345.544f;
-              int i = -43534523;
-              long l = 100;
-              sbyte s = 126;
-              short sh = 32766;
-              uint ui = 4;
-              ulong ul = 435345;
-              ushort ush = 54334;
-              string st = "labka";
+          (int, int, int, char) LocFunc(int[] intege, string strink)
+          {
+            int max = intege[0], min = intege[0], sum = 0;
+            for (int i = 0; i < intege.Length; i++)
+            {
+              sum += intege[i];
+              if (max < intege[i])
+              {
+                max = intege[i];
+              }
+            }
             
-              Console.WriteLine("Different types: {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}", TF, by, x, y, z, p, i, l, s, sh, ui, ul, ush, st);
+            for (int i = 0; i < intege.Length; i++)
+            {
+              if (min > intege[i])
+              {
+                min = intege[i];
+              }
+            }
+            var result = (max, min, sum, strink[0]);
+            return result;
+          }
+          
+          int Checked_()
+          {
+            checked
+            {
+              int n = 2147483647;
+              return 0;
+            }
+          }
+
+          int UnChecked_()
+          {
+            unchecked
+            {
+              int n = 2147483647;
+              return 0;
+            }
+          }
+            // 1a
+              Console.WriteLine("Enter types: ");
+              Console.Write("Bool: ");
+              bool TF = Convert.ToBoolean(Console.ReadLine());
+              Console.Write("Byte: ");
+              byte by = Convert.ToByte(Console.ReadLine());
+              Console.Write("Char: ");
+              char x = Convert.ToChar(Console.ReadLine());
+              Console.Write("Decimal: ");
+              decimal y = Convert.ToDecimal(Console.ReadLine());
+              Console.Write("Double: ");
+              double z = Convert.ToDouble(Console.ReadLine());
+              Console.Write("Float: ");
+              float p = Convert.ToSingle(Console.ReadLine());
+              Console.Write("Int: ");
+              int i = Convert.ToInt32(Console.ReadLine());
+              Console.Write("Long: ");
+              long l = Convert.ToInt64(Console.ReadLine());
+              Console.Write("SByte: ");
+              sbyte s = Convert.ToSByte(Console.ReadLine());
+              Console.Write("Short: ");
+              short sh = Convert.ToInt16(Console.ReadLine());
+              Console.Write("UInt: ");
+              uint ui = Convert.ToUInt32(Console.ReadLine());
+              Console.Write("ULong: ");
+              ulong ul = Convert.ToUInt64(Console.ReadLine());
+              Console.Write("UShort: ");
+              ushort ush = Convert.ToUInt16(Console.ReadLine());
+              Console.Write("String: ");
+              string st = Convert.ToString(Console.ReadLine());
+            
+              Console.WriteLine("\nDifferent types: {0}, {1}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, {10}, {11}, {12}, {13}", TF, by, x, y, z, p, i, l, s, sh, ui, ul, ush, st);
 
             // 1b
               // Неявное преобразование
@@ -39,8 +95,6 @@ namespace ConsoleApp1
               decimal bt3 = (decimal)z;
               double bt4 = (double)i;
               long bt5 = (long)sh;
-
-              short conv = Convert.ToInt16(l);
             // 1c
               int box = 99;
               Object obj1 = box;
@@ -69,6 +123,9 @@ namespace ConsoleApp1
               
               string a4 = String.Concat(a1, a2, a3); // Сцепление/Конкатенация
               Console.WriteLine("Concat: " + a4);
+
+              string a9 = a1.Substring(1); // Выделение подстроки
+              Console.WriteLine("Substring: " + a9);
               
               string a5 = String.Copy(a4); // Копирование
               Console.WriteLine("Copy: " + a5);
@@ -142,13 +199,69 @@ namespace ConsoleApp1
                 Console.WriteLine("\t" + master[i]);
               }
             // 3c
+              int[][] Arr = new int[3][];
+              Arr[0] = new int[2];
+              Arr[1] = new int[3];
+              Arr[2] = new int[4];
+
+              Console.WriteLine("Init of Step Massive: ");
+              for (i = 0; i < 2; i++)
+              {
+                int element = Convert.ToInt32(Console.ReadLine());
+                Arr[0][i] = element;
+              }
+              Console.WriteLine();
+              for (i = 0; i < 3; i++)
+              {
+                int element = Convert.ToInt32(Console.ReadLine());
+                Arr[1][i] = element;
+              }
+              Console.WriteLine();
+              for (i = 0; i < 4; i++)
+              {
+                int element = Convert.ToInt32(Console.ReadLine());
+                Arr[2][i] = element;
+              }
+              Console.WriteLine();
               
-              
-              
+                // Вывод ступенчатого массива
+                Console.WriteLine("Step Massive: ");
+                foreach (int[] row in Arr)
+                {
+                  foreach (int number in row)
+                  {
+                    Console.Write($"{number} \t");
+                  }
+                  Console.WriteLine();
+                } 
             // 3d
               var s1 = new int[0];
               var s2 = "";
             // 4a
+              var cort1 = (5, "Harry", 'c', "Potter", 123456789123456789);
+              var cort2 = (125, "Deniel", 'c', "Redclif", 123456789123456789);
+            // 4b
+              Console.WriteLine($"Cortege: {cort1.Item1}, {cort1.Item2}, {cort1.Item3}, {cort1.Item4}, {cort1.Item5}");
+              Console.WriteLine($"Cortege: {cort1.Item1}, {cort1.Item3}, {cort1.Item4}");
+            // 4c
+              var (b1, b2, b3, b4, b5) = cort1;
+              (var c1, var c2, var c3, var c4, var c5) = cort1;
+              (int d1, string d2, char d3, string d4, long d5) = cort1;
+            // 4d
+              if (cort1 == cort2)
+              {
+                Console.WriteLine("Equal");
+              }
+              else
+              {
+                Console.WriteLine("Not Equal");
+              }
+            // 5
+              int[] cortege = new[] { 1, 22, 3, 44, 55, 66, 7, 8 };
+              Console.WriteLine(LocFunc(cortege, "Stringgg"));
+            // 6
+              Checked_();
+              UnChecked_();
         }
     }
 }
