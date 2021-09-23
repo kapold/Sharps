@@ -16,7 +16,7 @@ namespace LW3
         public const double PI = Math.PI;
         public static int ID { get; private set; } = 0;
 
-        private string destination;
+        public string destination;
         public string Destination
         {
             set
@@ -29,7 +29,7 @@ namespace LW3
             }
         }
         
-        private int flight_number;
+        public int flight_number;
         public int FlightNumber
         {
             set
@@ -83,7 +83,7 @@ namespace LW3
             }
         }
         
-        private string day;
+        public string day;
         public string Day
         {
             set
@@ -106,9 +106,9 @@ namespace LW3
         static int quantity = 0;
         static Airline()
         {
-            Console.WriteLine("New Flight");
+            Console.WriteLine("New Flights Are Available");
         }
-        public Airline()
+        private Airline()
         {
             destination = "Unknown";
             flight_number = 0;
@@ -116,26 +116,27 @@ namespace LW3
             flight_type = "Unknown";
             time = "Unknown";
             
-            Print();
+            // Print();
         }
-        public Airline(string destination, int flight_number, string flight_type, string day, string time)
+        public Airline(string destination, int flight_number, string flight_type, string day, string time, string destR, string dayR)
         {
             this.destination = destination;
             this.flight_number = flight_number;
             this.flight_type = flight_type;
             this.day = day;
             this.time = time;
+            this.destR = destR;
+            this.dayR = dayR;
             quantity++;
             
             Print();
             
-            //ListOfDestination(ref destination);
-            //ListOfDays(ref day);
+            ListOfDestination(ref destR);
+            ListOfDays(ref dayR);
         }
 
         public Airline(string con = "default") {} // С параметром по умолчанию
-        // private Airline() { } // Закрытый конструктор
-        
+
         public void Print()
         {
             Console.WriteLine("\n<----------FLIGHT---------->");
@@ -150,26 +151,30 @@ namespace LW3
         {
             Console.WriteLine("Количество созданных объектов: " + quantity);
         }
-        public void ListOfDestination()
+
+        private string destR;
+        public string DestR
         {
-            if (destination == "Japane")
+            set {}
+            get { return destR; }
+
+        }
+        private string dayR;
+        public string DayR { get; set; }
+        
+        
+        public void ListOfDestination(ref string destR)
+        {
+            if (destination == destR)
             {
-                Console.WriteLine("Flight Number: " + flight_number);
-            }
-            else
-            {
-                Console.WriteLine("Таких рейсов нет");
+                Console.WriteLine("Flight Number(dest): " + flight_number);
             }
         }
-        public void ListOfDays()
+        public void ListOfDays(ref string dayR)
         {
-            if (day == "Wensday")
+            if (day == dayR)
             {
-                Console.WriteLine("Flight Number: " + flight_number);
-            }
-            else
-            {
-                Console.WriteLine("Таких рейсов нет");
+                Console.WriteLine("Flight Number(day): " + flight_number);
             }
         }
         
@@ -179,24 +184,92 @@ namespace LW3
             RDONLY = rd; // поле для чтения может быть инициализировано или изменено в конструкторе после компиляции
         }
         
+        public bool Equals(Airline obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            return this.destination == obj.destination;
+        }
+        
+        private int n {get;}
+        public override int GetHashCode()
+        {
+            return n;
+        }
+
+        public override string ToString()
+        {
+            return ($"\ndestination {this.destination}\nflight_number {this.flight_number}\nflight_type {this.flight_type}\nday {this.day}\ntime {this.time}\n");
+        }
     }
+    
+    public partial class Part // partial функция
+    {
+        public void F2()
+        {
+            Console.WriteLine("The Second(2) Function - Partial");
+        }
+    }
+    
+    
+    
     
     class Program
     {
         static void Main(string[] args)
         {
-            Airline Flight1 = new Airline("Japane", 12, "BelAvia", "Monday", "13:40");
-            Airline Flight2 = new Airline("Russia", 4, "AviaSales", "Wensday", "10:00");
-            Airline Flight3 = new Airline("China", 3, "Fli", "Friday", "12:20");
+            Airline Flight1 = new Airline("Japane", 12, "BelAvia", "Monday", "13:40", "Japane", "Wensday");
+            Airline Flight2 = new Airline("Russia", 4, "AviaSales", "Wensday", "10:00","Japane", "Wensday");
+            Airline Flight3 = new Airline("China", 3, "Fli", "Friday", "12:20", "Japane", "Wensday");
             Airline[] flights = new Airline[3];
             flights[0] = Flight1;
-            flights[1] = Flight1;
-            flights[2] = Flight1;
+            flights[1] = Flight2;
+            flights[2] = Flight3;
             Airline.Quantity();
-            // Airline prvt = new Airline(); // Вызов закрытого конструктора
+            Airline prvt = new Airline(); // Вызов закрытого конструктора
 
-            Flight1.ListOfDestination();
-            Flight2.ListOfDays();
+
+            Console.WriteLine("\nPartial class: ");
+            Part prt = new Part();
+            prt.F1();
+            prt.F2();
+            
+            Console.WriteLine("GetType: " + Flight1.GetType());
+            Console.WriteLine("Equals(changed): " + Flight1.Equals(Flight2));
+            Console.WriteLine("GetHashCode: " + Flight1.GetHashCode());
+            Console.WriteLine("ToString: " + Flight1.ToString() + "\n");
+
+            Console.WriteLine("Введите пункт назначения: ");
+            string CDestination = Console.ReadLine();
+            Console.WriteLine("Список рейсов для заданного пункта назначения: ");
+            for (int i = 0; i < flights.Length; i++)
+            {
+                if (flights[i].destination == CDestination)
+                {
+                    Console.WriteLine("\tНомер рейса: " + flights[i].flight_number);
+                }
+                else
+                {
+                    Console.WriteLine("Такого рейса нет");
+                }
+            }
+            
+            Console.WriteLine("Введите день: ");
+            string CDay = Console.ReadLine();
+            Console.WriteLine("Cписок рейсов для заданного дня недели: ");
+            for (int i = 0; i < flights.Length; i++)
+            {
+                if (flights[i].day == CDay)
+                {
+                    Console.WriteLine("\tНомер рейса: " + flights[i].flight_number);
+                }
+                else
+                {
+                    Console.WriteLine("Такого рейса нет");
+                }
+            }
         }
     }
 }
