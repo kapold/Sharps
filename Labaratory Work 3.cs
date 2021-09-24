@@ -133,6 +133,7 @@ namespace LW3
             
             ListOfDestination(ref destR);
             ListOfDays(ref dayR);
+            Ret(out dayR);
         }
 
         public Airline(string con = "default") {} // С параметром по умолчанию
@@ -177,6 +178,10 @@ namespace LW3
                 Console.WriteLine("Flight Number(day): " + flight_number);
             }
         }
+        public void Ret(out string dayR)
+        {
+            dayR = this.dayR;
+        }
         
         public readonly int RDONLY = 99;
         public Airline(int rd)
@@ -184,13 +189,15 @@ namespace LW3
             RDONLY = rd; // поле для чтения может быть инициализировано или изменено в конструкторе после компиляции
         }
         
-        public bool Equals(Airline obj)
-        {
-            if (obj == null)
+        
+        public override bool Equals(Airline obj)
+        {   
+            Airline air;
+            if (obj == null || (air = obj as Airline) == null)
             {
                 return false;
             }
-            return this.destination == obj.destination;
+            return  this.destination == air.destination;
         }
         
         private int n {get;}
@@ -205,7 +212,7 @@ namespace LW3
         }
     }
     
-    public partial class Part // partial функция
+    public partial class Part
     {
         public void F2()
         {
@@ -250,10 +257,6 @@ namespace LW3
                 {
                     Console.WriteLine("\tНомер рейса: " + flights[i].flight_number);
                 }
-                else
-                {
-                    Console.WriteLine("Такого рейса нет");
-                }
             }
             
             Console.WriteLine("Введите день: ");
@@ -265,11 +268,10 @@ namespace LW3
                 {
                     Console.WriteLine("\tНомер рейса: " + flights[i].flight_number);
                 }
-                else
-                {
-                    Console.WriteLine("Такого рейса нет");
-                }
             }
+            
+            var anon = new {destination = "USA", time = "13:00", flightNumber = 2};
+            Console.WriteLine("Anonim type: " + anon.GetType());
         }
     }
 }
