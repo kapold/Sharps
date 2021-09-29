@@ -303,7 +303,13 @@ namespace LW4
 
         public static int[] DeleteArr(this int[] mass)
         {
-            int[] mas_del = Array.FindAll(mass, (val) => val >= 0);
+            for (int i = 0; i < mass.Length; i++)
+            {
+                if (mass[i] < 0)
+                {
+                    mass[i] = 0;
+                }
+            }
             return mass;
         }
     }
@@ -312,7 +318,6 @@ namespace LW4
     {
         static void Main(string[] args)
         {
-            /*
             int N;
             
             Console.WriteLine("Введите размерность массива: ");
@@ -325,8 +330,8 @@ namespace LW4
             massiv.Count(); // Размер массива
             
             Array s = new Array(A, A.Length); // Создаем новый объект для нового массива
-            */
             
+            /*
             // Методы расширения
             string str = "Привет мир";
             char c = 'и';
@@ -338,8 +343,11 @@ namespace LW4
             Console.Write("DeleteArr(ExMeth): ");
             for (int j = 0; j < mass.Length; j++)
             {
+                if (mass[j] == 0)
+                    continue;
                 Console.Write(mass[j] + " ");
             }
+            */
         }
     }
 }
