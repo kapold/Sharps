@@ -320,10 +320,11 @@ namespace LW4
         {
             int N;
             
-            Console.WriteLine("Введите размерность массива: ");
+            Console.Write("Введите размерность массива: ");
             N = int.Parse(Console.ReadLine());
             
             int[] A = new int[N];
+            int[] B = new int[N];
             Array massiv = new Array(A, N); // Создаем объект
             massiv.In(); // Ввод данных в массив
             massiv.Print(); // Вывод массива
@@ -331,7 +332,36 @@ namespace LW4
             
             Array s = new Array(A, A.Length); // Создаем новый объект для нового массива
             
-            /*
+            Console.WriteLine();
+            Console.Write("Sum: ");
+            var exp = StaticOperation.Sum(massiv, s);
+            for (int j = 0; j < exp.n; j++)
+            {
+                Console.Write(" " + exp.array[j]);
+            }
+            Console.WriteLine("MaxMin: " + StaticOperation.MaxMin(massiv));
+            Console.WriteLine("Quantity: " + StaticOperation.Quantity(massiv));
+
+            int[] arrr = new int[1];
+            arrr[0] = massiv.array[0] * s.array[0];
+            bool bigger = massiv.array[0] > massiv.array[1];
+            bool smaller = massiv.array[0] < massiv.array[1];
+            if (!bigger)
+            {
+                Console.WriteLine("!bigger");
+            }
+
+            if (bigger == smaller)
+            {
+                Console.WriteLine("bigger == smaller");
+            }
+
+            if (bigger != smaller)
+            {
+                Console.WriteLine("bigger != smaller");
+            }
+            
+            
             // Методы расширения
             string str = "Привет мир";
             char c = 'и';
@@ -347,7 +377,6 @@ namespace LW4
                     continue;
                 Console.Write(mass[j] + " ");
             }
-            */
         }
     }
 }
