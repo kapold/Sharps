@@ -8,16 +8,29 @@ namespace LW5
 {
     class Program
     {
+        // <---- Одноименные методы ---->
+        interface IInterface1{
+            void Method1();
+        }
+        interface IInterface2{
+            void Method1();
+        }
+        class SomeClass : IInterface2, IInterface1
+        {
+            void IInterface1.Method1(){
+                Console.WriteLine("Interface1");
+            }
+            void IInterface2.Method1(){
+                Console.WriteLine("Interface2");
+            }
+        }
+        // <----------------------------->
+
         interface IProgrammer
         {
             void Name();
             void Type();
             void Developer();
-        }
-
-        abstract class Test
-        {
-            public abstract bool test();
         }
 
         abstract class AYear
@@ -138,13 +151,14 @@ namespace LW5
             }
         }
 
+        
         class Over
         {
             public string name { get; set; } = "Overriding";
             
-            public Over(string frame)
+            public Over(string fame)
             {
-                this.name = frame;
+                this.name = fame;
             }
 
             public override int GetHashCode()
@@ -152,13 +166,7 @@ namespace LW5
                 Console.WriteLine($"\nHash of {this.name} is: {name.GetHashCode()}\n");
                 return name.GetHashCode();
             }
-
-            // public override void GetType()
-            // {
-            //     Console.WriteLine("type is over it");
-            //     return;
-            // }
-
+            
             public override string ToString()
             {
                 return $"{name}\n";
@@ -222,6 +230,11 @@ namespace LW5
             }
             
             dynamic[] array = new dynamic[] {soft, proc, venom, sapper};
+
+            // Одноименные методы
+            SomeClass interf = new SomeClass();
+            ((IInterface1)interf).Method1();
+            ((IInterface2)interf).Method1();
         }
     }
 }
