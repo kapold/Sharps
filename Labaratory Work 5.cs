@@ -1,7 +1,9 @@
 using System;
     /*
-      ПО, Набор операций, Текстовый процессор, Word, Вирус,
-      CConficker Игрушка, Сапер, Разработчик.
+      Разработчик -> Вирус -> CConficker
+      Разработчик -> ПО -> Игрушка -> Сапер
+      Разработчик -> ПО -> Текстовый редактор -> Word
+      Интерфейс: Набор операций
     */
 
 namespace LW5
@@ -15,6 +17,7 @@ namespace LW5
         interface IInterface2{
             void Method1();
         }
+        
         class SomeClass : IInterface2, IInterface1
         {
             void IInterface1.Method1(){
@@ -26,74 +29,48 @@ namespace LW5
         }
         // <----------------------------->
 
-        interface IProgrammer
+        interface ISetOfOperations
         {
-            void Name();
-            void Type();
-            void Developer();
-        }
+            void info();
 
-        abstract class AYear
+            static void Hello()
+            {
+                Console.WriteLine("Hi");
+            }
+            static int MaxNumber = 9;
+            const int MinNumber = 0;
+        } // Интерфейс
+        
+        class Developer
         {
-            public string year { set; get; }
-            public virtual void Name() {}
+            public string developer { set; get; }
+            
+            public override string ToString()
+            {
+                return $"Dev: {developer}";
+            }
         }
-        sealed class Software : AYear, IProgrammer
+        
+        abstract class Software : Developer
         {
             public string name { set; get; }
             public string type { set; get; }
             public string developer { set; get; }
-
-            public void Name()
-            {
-                Console.WriteLine($"Название ПО: {name}");
-            }
-            public void Type()
-            {
-                Console.WriteLine($"Тип ПО: {type}");
-            }
-            public void Developer()
-            {
-                Console.WriteLine($"Разработчик ПО: {developer} \n");
-            }
             
             public override string ToString()
             {
                 return $"Software: {name}, {type}, {developer}";
             }
-        }
-        
-        sealed class WordProcessor : AYear, IProgrammer
-        {
-            public string name { set; get; }
-            public string type { set; get; }
-            public string developer { set; get; }
 
-            public void Name()
-            {
-                Console.WriteLine($"Название редактора: {name}");
-            }
-            public void Type()
-            {
-                Console.WriteLine($"Тип редактора: {type}");
-            }
-            public void Developer()
-            {
-                Console.WriteLine($"Разработчик редактора: {developer} \n");
-            }
-            
-            public override string ToString()
-            {
-                return $"WordProcessor: {name}, {type}, {developer}";
-            }
-        }
+            public abstract void NewMethod();
+
+        } // Абстрактный класс
         
-        sealed class Virus : AYear, IProgrammer
+        // 1st (Developer -> Virus -> CConficker)
+        class Virus : Developer
         {
             public string name { set; get; }
             public string type { set; get; }
-            public string developer { set; get; }
-            
             public void Name()
             {
                 Console.WriteLine($"Название вируса: {name}");
@@ -102,23 +79,43 @@ namespace LW5
             {
                 Console.WriteLine($"Тип вируса: {type}");
             }
-            public void Developer()
+        }
+        sealed class CConficker : Virus, ISetOfOperations
+        {
+            public void info()
             {
-                Console.WriteLine($"Разработчик вируса: {developer} \n");
+                Console.WriteLine($"Description: {developer}");
             }
-            
+
             public override string ToString()
             {
-                return $"Virus: {name}, {type}, {developer}";
+                return $"CConficker: {name}, {type}";
             }
+            
         }
         
-        sealed class Sapper : AYear, IProgrammer
+        // 2nd (Developer -> ПО -> Game -> Sapper)
+        class Game : Software, ISetOfOperations
         {
-            public string name { set; get; }
-            public string type { set; get; }
             public string developer { set; get; }
             
+            public void Developer()
+            {
+                Console.WriteLine($"Разработчик сапера: {developer} \n");
+            }
+            
+            public void info()
+            {
+                Console.WriteLine("<- Game is Sapper ->");
+            }
+
+            public override void NewMethod()
+            {
+                Console.WriteLine("Abstr meth");
+            }
+        }
+        class Sapper : Game
+        {
             public void Name()
             {
                 Console.WriteLine($"Название сапера: {name}");
@@ -127,29 +124,79 @@ namespace LW5
             {
                 Console.WriteLine($"Тип сапера: {type}");
             }
-            public void Developer()
-            {
-                Console.WriteLine($"Разработчик сапера: {developer} \n");
-            }
-            
             public override string ToString()
             {
                 return $"Sapper: {name}, {type}, {developer}";
             }
+
+            
+            Preview pr;
+            public Sapper()
+            {
+                this.pr = new Preview("Hello");
+            }
+        } // Композиция
+
+        class Preview
+        {
+            public string prev;
+            public Preview(string p)
+            {
+                prev = p;
+            }
+        } // Композиция
+        
+        // 3d (Developer -> ПО -> WordProcessor -> Word)
+        class WordProcessor : Software, ISetOfOperations
+        {
+            public string developer { set; get; }
+            
+            public void Developer()
+            {
+                Console.WriteLine($"Разработчик: {developer} \n");
+            }
+            
+            public void info()
+            {
+                Console.WriteLine("<- WordProcessor is Word ->");
+            }
+            
+            public override void NewMethod()
+            {
+                Console.WriteLine("Abstr meth2");
+            }
         }
 
+        class Word : WordProcessor
+        {
+            public void Name()
+            {
+                Console.WriteLine($"Название: {name}");
+            }
+            public void Type()
+            {
+                Console.WriteLine($"Тип: {type}");
+            }
+            public override string ToString()
+            {
+                return $"Word: {name}, {type}, {developer}";
+            }
+        }
+        
+        // Printer
         class Printer : APrinter
         {
             public string IAmPrinting;
         }
         abstract class APrinter
         {
-            public void IamPrinting(AYear someobj)
+            public void IamPrinting(Developer someobj)
             {
                 Console.WriteLine($"Тип этого обьекта: " + someobj.GetType());
                 Console.WriteLine(someobj.ToString());
             }
         }
+        // <------------------------>
 
         
         class Over
@@ -186,30 +233,24 @@ namespace LW5
 
         static void Main(string[] args)
         {
-            Software soft = new Software { name = "Hub", type = "Git", developer = "Anton INC."};
-            soft.Name();
-            soft.Type();
-            soft.Developer();
-            WordProcessor proc = new WordProcessor { name = "Word", type = "Processor", developer = "Microsoft"};
-            proc.Name();
-            proc.Type();
-            proc.Developer();
-            Virus venom = new Virus { name = "Venom", type = "ComputerV", developer = "No Information"};
-            venom.Name();
-            venom.Type();
-            venom.Developer();
-            Sapper sapper = new Sapper { name = "Sapper", type = "Game", developer = "Microsoft"};
+            CConficker conf = new CConficker { name = "Net-Worm.Win32.Kido.bt", type = "Computer worm" };
+            conf.Name();
+            conf.Type();
+            Sapper sapper = new Sapper { name = "Sapper", type = "Game", developer = "Microsoft" };
             sapper.Name();
             sapper.Type();
             sapper.Developer();
-            
+            Word word = new Word { name = "Word", type = "Program", developer = "Microsoft" };
+            word.Name();
+            word.Type();
+            word.Developer();
+
             Printer print = new Printer();
-            print.IamPrinting(soft);
-            print.IamPrinting(proc);
-            print.IamPrinting(venom);
+            print.IamPrinting(conf);
             print.IamPrinting(sapper);
+            print.IamPrinting(word);
             
-            Virus Vir = venom as Virus;
+            Virus Vir = conf as CConficker;
             if (Vir == null)
             {
               Console.WriteLine("Преобразование прошло неудачно");
@@ -219,9 +260,9 @@ namespace LW5
               Console.WriteLine("Преобразование прошло удачно");
             }
 
-            if (soft is Software)
-            {
-              Software soft2 = (Software)soft;
+            if (sapper is Sapper)
+            { 
+                Sapper soft2 = (Sapper)sapper;
               Console.WriteLine("Преобразование допустимо");
             }
             else
@@ -229,12 +270,14 @@ namespace LW5
               Console.WriteLine("Преобразование не допустимо");
             }
             
-            dynamic[] array = new dynamic[] {soft, proc, venom, sapper};
+            dynamic[] array = new dynamic[] {conf, sapper, word};
 
             // Одноименные методы
             SomeClass interf = new SomeClass();
             ((IInterface1)interf).Method1();
             ((IInterface2)interf).Method1();
+            
+            ISetOfOperations.Hello();
         }
     }
 }
