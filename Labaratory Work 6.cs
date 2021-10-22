@@ -13,28 +13,6 @@ namespace LW5
 {
     class Program
     {
-        public interface IComparable
-        {
-            int CompareTo(object o);
-        }
-        // <---- Одноименные методы ---->
-        interface IInterface1{
-            void Method1();
-        }
-        interface IInterface2{
-            void Method1();
-        }
-        class SomeClass : IInterface2, IInterface1
-        {
-            void IInterface1.Method1(){
-                Console.WriteLine("Interface1");
-            }
-            void IInterface2.Method1(){
-                Console.WriteLine("Interface2");
-            }
-        }
-        // <----------------------------->
-
         interface ISetOfOperations
         {
             void info();
@@ -184,8 +162,6 @@ namespace LW5
             }
         }
         // <------------------------>
-
-        
         class Over
         {
             public string name { get; set; } = "Overriding";
@@ -222,7 +198,13 @@ namespace LW5
         
         
         // ЛР6
-        enum Enumerable { Developer, Software, WordProcessor, Word } // Перечисление
+        enum Enumerable : byte
+        {
+            Developer,
+            Software,
+            WordProcessor,
+            Word
+        } // Перечисление
 
         struct Person
         {
@@ -305,6 +287,27 @@ namespace LW5
                     Console.WriteLine("   " + softw.name);
                 }
             }
+
+            /*public static void FileOutput(List<Software> g)
+            {
+                string path = @"D:\Универ 2 курс\Университет 3 семестр\ООП\LW6\LW6";
+                using (FileStream fstream = File.OpenRead($"{path}/file.txt"))
+                {
+
+                    byte[] array = new byte[fstream.Length];
+                    fstream.Read(array, 0, array.Length);
+                    string[] readText = File.ReadAllLines(path);
+                    Console.WriteLine(readText[0] + readText[1]);
+                    g[4].name = System.Text.Encoding.Default.GetString(array);
+                    
+                    //g.Add(new Game(){ name = , type = , developer = });
+                    Console.WriteLine("   " + g[4].name);
+                    Console.WriteLine("   " + g[4].type);
+                    Console.WriteLine("   " + g[4].developer);
+                }
+
+                Console.ReadLine();
+            }*/
         } // Класс-контроллер
 
         static void Main(string[] args)
@@ -353,8 +356,6 @@ namespace LW5
             ((IInterface1)interf).Method1();
             ((IInterface2)interf).Method1();*/
             
-            
-            
             // ЛР 6
             Enumerable a;
             a = Enumerable.Word;
@@ -378,6 +379,10 @@ namespace LW5
             Controller.FindCurrentGameType(PC.container);
             Controller.FindVersionEditor(PC.container);
             Controller.SortedSoftware(PC.container);
+
+            // Game test = new Game();
+            // PC.AddItem(test);
+            // Controller.FileOutput(PC.container);
         }
     }
 }
