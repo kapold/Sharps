@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 
-
 namespace LW5
 {
     class Program
@@ -38,15 +37,76 @@ namespace LW5
         // 1st (Developer -> Virus -> CConficker)
         class Virus : Developer
         {
-            public string name { set; get; }
-            public string type { set; get; }
+            private string Naming = "No";
+            public string name
+            {
+                get
+                {
+                    return Naming;
+                }
+                set
+                {
+                    Debug.Assert(value == "");
+
+                    try
+                    {
+                        if (value == null)
+                        {
+                            throw new Exceptions.NoVirus("You should name your virus");
+                        }
+                        if (value == "")
+                        {
+                            throw new Exceptions.NoVirus("You should name your virus");
+                        }
+                    }
+                    catch (Exceptions.NoVirus e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
+            }
+            private int Quantity = 0;
+            public int quantity
+            {
+                get
+                {
+                    return Quantity;
+                }
+                set
+                {
+                    try
+                    {
+                        if (value < 0)
+                        {
+                            throw new Exceptions.NumberException("Incorrect number");
+                        }
+                        else if (value == 0)
+                        {
+                            throw new Exceptions.IsZero("Number is Zero");
+                        }
+                        else quantity = value;
+                    }
+                    catch (Exceptions.IsZero e)
+                    {
+                        Console.WriteLine(e.Message);
+                        throw;
+                    }
+                    catch (Exceptions.NumberException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        throw;
+                    }
+                }
+            }
+            
+            
             public void Name()
             {
                 Console.WriteLine($"Название вируса: {name}");
             }
             public void Type()
             {
-                Console.WriteLine($"Тип вируса: {type}");
+                Console.WriteLine($"Тип вируса: {quantity}");
             }
         }
         sealed class CConficker : Virus, ISetOfOperations
@@ -58,7 +118,7 @@ namespace LW5
 
             public override string ToString()
             {
-                return $"CConficker: {name}, {type}";
+                return $"CConficker: {name}, {quantity}";
             }
         }
         
@@ -140,38 +200,9 @@ namespace LW5
                 return $"Word: {name}, {type}, {developer}";
             }
         }
-        
-        // Printer
-        class Printer : APrinter
-        {
-            public string IAmPrinting;
-        }
-        abstract class APrinter
-        {
-            public void IamPrinting(Developer someobj)
-            {
-                Console.WriteLine($"Тип этого обьекта: " + someobj.GetType());
-                Console.WriteLine(someobj.ToString());
-            }
-        }
-        // <------------------------>
 
-        // ЛР7
-        public class NumberException : Exception
-        {
-            public NumberException(string message) : base(message) {}
-        }
 
-        public class StringException : Exception
-        {
-            public StringException(string message) : base(message) {}
-        }
-
-        class ClException : Exception
-        {
-            public ClException(string message) : base(message) {}
-        }
-
+        // 7
         class ForErrors
         {
             public ForErrors(int count)
@@ -186,20 +217,23 @@ namespace LW5
         
         static void Main(string[] args)
         {
-            //  1.Проверка на правильность создания обьекта
+            //  1
+            CConficker conf = new CConficker();
             try
             {
-                CConficker conf = new CConficker { name = "Net-Worm.Win32.Kido.bt", type = "Computer worm" };
-                conf.Name();
-                conf.Type();
+                conf.name = "Corona";
+                conf.quantity = -9;
             }
-            catch (ClException e)
+            catch (Exceptions.NoVirus e)
             {
-                Console.WriteLine("Экземпляр создан неправильно, error: " + e);
-                throw;
+                Console.WriteLine("Экземпляр создан неправильно: " + e);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.Source);
+                Console.WriteLine(e.StackTrace);
+                Console.WriteLine(e.TargetSite);
             }
             
-            // 2.Деление на 0
+            // 2
             try
             {
                 int a = 0;
@@ -210,17 +244,17 @@ namespace LW5
                 Console.WriteLine(e.Message);
                 throw;
             }
-            // 3.Проверка на отрицательное число
+            // 3
             try
             {
                 ForErrors error = new ForErrors(-1);
             }
-            catch (NumberException e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 throw;
             }
-            // 4.Проверка на строку
+            // 4
             try
             {
                 string[] str = new string[1];
@@ -231,16 +265,12 @@ namespace LW5
                 Console.WriteLine(e.Message);
                 throw;
             }
-            finally
-            {
-                Console.WriteLine("Ошибки кончились");
-            }
             // 5.
             try
             {
                 string abc = null;
             }
-            catch (StringException e)
+            catch (Exceptions.StringException e)
             {
                 Console.WriteLine(e.Message);
                 throw;
@@ -254,6 +284,10 @@ namespace LW5
                 Console.WriteLine(e.TargetSite);
                 Console.WriteLine(e.Source);
                 Console.WriteLine(e.StackTrace);
+            }
+            finally
+            {
+                Console.WriteLine("Ошибки кончились");
             }
         }
     }
