@@ -80,7 +80,7 @@ namespace LW11
             Airline Flight7 = new Airline("UK", 7, "common", "Yuesday", new DateTime(2021, 11, 15, 10, 00, 00));
             Airline Flight8 = new Airline("Russia", 8, "common", "Wednesday", new DateTime(2021, 11, 15, 5, 30, 00));
             Airline Flight9 = new Airline("Italy", 9, "common", "Monday", new DateTime(2021, 11, 15, 9, 00, 00));
-            Airline Flight10 = new Airline("Japane", 10, "common", "Friday", new DateTime(2021, 11, 15, 2, 45, 00));
+            Airline Flight10 = new Airline("USA", 10, "common", "Friday", new DateTime(2021, 11, 15, 2, 45, 00));
 
             List<Airline> listOfFlights = new List<Airline>()
             {
@@ -127,8 +127,7 @@ namespace LW11
             var laterTime = from m in wednesdayFriday
                 orderby m.time descending
                 select m;
-            var latestFlight = laterTime.Take(1);
-            foreach (var item in latestFlight)
+            foreach (var item in laterTime.Take(1))
             {
                 item.Print();
             }
@@ -143,6 +142,45 @@ namespace LW11
             }
             
             
+            // Задание 4
+            Console.WriteLine("<-- Кастомный запрос -->");
+            var customLINQ = from m in listOfFlights
+                where m.destination == "USA" && m.day == "Friday"
+                orderby m.time ascending
+                select m;
+            var CountCustom = customLINQ.Count();
+            Console.Write($"Количество подходящих рейсов: {CountCustom}\n");
+            Console.WriteLine("Самый ранний рейс: ");
+            foreach (var item in customLINQ.Take(1))
+            {
+                item.Print();
+            }
+
+            // Задание 5 (с Join)
+            Console.WriteLine("Join: ");
+            string[] flightNames =
+            {
+                "USA", "Belarus", "Russia", "Ukrain"
+            };
+            int[] flightLength =
+            {
+                1, 2, 3, 4, 6, 7
+            };
+
+            var someFlights = flightNames
+                .Join(
+                    flightLength,               // внутренняя
+                    w => w.Length,          // внешний ключ выбора
+                    q => q,                   // внутренний ключ выбора
+                    (w, q) => new        // результат
+                    {
+                        name = w,
+                        id = String.Format("{0} ", q),
+                    });
+            foreach (var item in someFlights)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
