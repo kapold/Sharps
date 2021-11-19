@@ -1,10 +1,11 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace LW10
 {
-    public class Car : IComparable<Car>
+    public class Car : IList<Car>
     {
         public string Name { set; get; }
         public int Price { set; get; }
@@ -13,11 +14,6 @@ namespace LW10
         {
             Name = name;
             Price = price;
-        }
-
-        public int CompareTo(Car obj)
-        {
-            return Price.CompareTo(obj);
         }
 
         public void IsEngineStart(Engine engine)
@@ -30,6 +26,64 @@ namespace LW10
             {
                 Console.WriteLine($"Что-то произошло не так.. Видно не судьба.");
             }
+        }
+
+        public IEnumerator<Car> GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Add(Car item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(Car item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(Car[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(Car item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Count { get; }
+        public bool IsReadOnly { get; }
+        public int IndexOf(Car item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Insert(int index, Car item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAt(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Car this[int index]
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
     }
 

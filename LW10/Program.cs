@@ -15,9 +15,8 @@ namespace LW10
             Car Porsche = new Car("Porsche Taycan Turbo S", 249580);
             Car Audi = new Car("Audi A8 Long 45 TDI IV (D5)", 186600);
             Car Jaguar = new Car("Jaguar XJ Long IV (X351)", 24756);
-            
-            
-            
+
+
             // Методы для работа с коллекцией (Dictionary)
             CarDictionary garage = new CarDictionary();
             garage.Add(1, Mercedes);
@@ -61,19 +60,26 @@ namespace LW10
             {
                 Console.WriteLine($"{item}");
             }
-
+            
             int count = DictionaryInList.Count;
-            Console.Write($"Какой элемент найти(элементов: {count}): ");
+            Console.Write($"\nКакой элемент найти(элементов: {count}): ");
             int search = Convert.ToInt32(Console.ReadLine());
+            int thereIs = 0;
             if (search > count)
                 throw new Exception("Error: Такого элемента нет");
             
-            Console.WriteLine($"Поиск элемента {search} в списке: ");
+            Console.WriteLine($"Поиск элемента {search} в списке");
             foreach (var item in DictionaryInList)
             {
                 if (item == search)
                 {
                     Console.WriteLine("Такой элемент есть!");
+                    continue;
+                }
+                thereIs++;
+                if (thereIs == count)
+                {
+                    Console.WriteLine("Такого элемента нет!");
                 }
             }
             
@@ -87,14 +93,14 @@ namespace LW10
                 new Car("Kia Rio X IV", 23968)
             };
             
-            Console.WriteLine("События Observable коллекции: ");
-            obsCars.CollectionChanged += Cars_CollectionChanged;
+            Console.WriteLine("\nСобытия Observable коллекции: ");
+            obsCars.CollectionChanged += CarsCollectionChanged;
             
             obsCars.Add(new Car("Mazda RX-8", 5000));
             obsCars.RemoveAt(1);
             obsCars[0] = new Car("Audo RS8", 72411);
             
-            Console.WriteLine("Список машин: ");
+            Console.WriteLine("\nСписок машин: ");
             foreach (var item in obsCars)
             {
                 Console.WriteLine(item.Name);
@@ -103,7 +109,7 @@ namespace LW10
             
             
             // Обработчик события
-            static void Cars_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+            static void CarsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
             {
                 switch (e.Action)
                 {
