@@ -1,0 +1,38 @@
+Класс LW12.Sapper определен в сборке LW12, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+
+Конструкторы: Void .ctor()
+
+Методы: 
+--> Void		Name()
+--> Void		Type()
+--> String		ToString()
+--> Void		set_developer()
+--> String		get_developer()
+--> Void		Developer()
+--> Void		info()
+--> Void		NewMethod()
+--> Void		set_name()
+--> String		get_name()
+--> Void		set_type()
+--> String		get_type()
+--> Void		set_developer()
+--> String		get_developer()
+--> Void		set_developer()
+--> String		get_developer()
+--> Type		GetType()
+--> Boolean		Equals()
+--> Int32		GetHashCode()
+
+Свойства:
+System.String	developer
+System.String	name
+System.String	type
+
+Интерфейсы:
+ISetOfOperations
+
+Методы с параметром System.Int32:
+
+Task 2:
+Parameters
+Mercedes E320
