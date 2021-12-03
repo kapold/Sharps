@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace LW10
 {
-    public class Car : IList<Car>
+    public class Car
     {
         public string Name { set; get; }
         public int Price { set; get; }
@@ -15,69 +15,65 @@ namespace LW10
             Name = name;
             Price = price;
         }
+    }
 
-        public void IsEngineStart(Engine engine)
-        {
-            if (engine.Power())
-            {
-                Console.WriteLine($"Поздравляю, {Name} завелась!");
-            }
-            else
-            {
-                Console.WriteLine($"Что-то произошло не так.. Видно не судьба.");
-            }
-        }
-
-        public IEnumerator<Car> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+    public class CarList : IList<Car>
+    {
+        List<Car> List = new List<Car>();
 
         public void Add(Car item)
         {
-            throw new NotImplementedException();
+            List.Add(item);
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            List.Clear();
         }
 
         public bool Contains(Car item)
         {
-            throw new NotImplementedException();
+            return List.Contains(item);
         }
 
         public void CopyTo(Car[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            List.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(Car item)
         {
-            throw new NotImplementedException();
+            return List.Remove(item);
         }
 
         public int Count { get; }
         public bool IsReadOnly { get; }
         public int IndexOf(Car item)
         {
-            throw new NotImplementedException();
+            return List.IndexOf(item);
         }
 
         public void Insert(int index, Car item)
         {
-            throw new NotImplementedException();
+            List.Insert(index, item);
         }
 
         public void RemoveAt(int index)
         {
-            throw new NotImplementedException();
+            List.RemoveAt(index);
+        }
+        
+        public IEnumerator<Car> GetEnumerator()
+        {
+            foreach (var item in List)
+            {
+                yield return item;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         public Car this[int index]
@@ -87,8 +83,6 @@ namespace LW10
         }
     }
 
-    
-    
     public class CarDictionary
     {
         public Dictionary<int, Car> list { set; get; }
@@ -120,18 +114,6 @@ namespace LW10
         {
             var key = list.First(x => x.Value == searchCar).Key;
             return key;
-        }
-    }
-
-
-    public class Engine
-    {
-        public bool Power()
-        {
-            var random = new Random();
-            bool result = random.Next(2) == 1;
-            Console.Write("Попытка завести двигатель: ");
-            return result;
         }
     }
 }

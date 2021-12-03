@@ -15,7 +15,18 @@ namespace LW10
             Car Porsche = new Car("Porsche Taycan Turbo S", 249580);
             Car Audi = new Car("Audi A8 Long 45 TDI IV (D5)", 186600);
             Car Jaguar = new Car("Jaguar XJ Long IV (X351)", 24756);
-
+            
+            // Методы для работы с коллекцией (IList)
+            CarList carList = new CarList();
+            carList.Add(Mercedes);
+            carList.Add(Audi);
+            carList.Add(Audi);
+            foreach (var item in carList)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine($"Index of {Mercedes.Name}: {carList.IndexOf(Audi)}");
+            Console.WriteLine($"Count of cars: {carList.Count}");
 
             // Методы для работа с коллекцией (Dictionary)
             CarDictionary garage = new CarDictionary();
