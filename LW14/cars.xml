@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<cars>
+  <car name="Mercedes CLS">
+    <company>Mercedes</company>
+    <price>39.950$</price>
+  </car>
+  <car name="Audi A8">
+    <company>Audi</company>
+    <price>135.056$</price>
+  </car>
+</cars>
