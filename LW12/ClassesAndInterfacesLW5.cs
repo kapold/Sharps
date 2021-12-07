@@ -173,6 +173,25 @@ namespace LW12
             {
                 return $"Word: {name}, {type}, {developer}";
             }
+
+            public Word(string Name, string Type, string Developer)
+            {
+                name = Name;
+                type = Type;
+                developer = Developer;
+            }
+
+            public Word()
+            {
+                name = "idk";
+                type = "unknown";
+                developer = "???";
+            }
+            
+            public void LW12Method(string name, string type)
+            {
+                Console.WriteLine($"Название: {name}; Тип: {type}");
+            }
         }
         
         // Printer

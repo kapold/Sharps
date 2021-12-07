@@ -159,55 +159,49 @@ namespace LW12
         public static void InvokeClass(object obj, string methodName)
         {
             Type type = obj.GetType();
-            string filePath = @"D:\Универ 2 курс\Университет 3 семестр\ООП\LW12\invoke.txt";
-            string fileInfo = "";
-            string strParams = "Parametrs";
-            using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
-            {
-                fileInfo = sr.ReadToEnd();
-            }
+            string filePath = @"D:\Универ 2 курс\Университет 3 семестр\ООП\LW12\info.txt";
+            string fileInf = "";
+            string strParams = "parameters";
 
-            int index = fileInfo.IndexOf(strParams);
+            using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
+                fileInf = sr.ReadToEnd();
+
+            int index = fileInf.IndexOf(strParams);
+
             List<string> paramsList = new List<string>();
-            string currentParams = "";
-            
-            for (int i = index + strParams.Length; i < fileInfo.Length; i++)
+            string currentParam = "";
+            for (int i = index + strParams.Length + 2; i < fileInf.Length; i++)
             {
-                if (fileInfo[i] == ' ' || fileInfo[i] == '\n')
+                if (fileInf[i] == ' ' || fileInf[i] == '\n')
                 {
-                    paramsList.Add(currentParams);
-                    currentParams = "";
+                    paramsList.Add(currentParam);
+                    currentParam = "";
                 }
                 else
-                {
-                    currentParams += fileInfo[i];
-                }
+                    currentParam += fileInf[i];
             }
 
             var method = type.GetMethod(methodName);
             string stringParam1 = "";
-            int intParam2;
+            string stringParam2 = "";
             stringParam1 = paramsList.First();
-            int.TryParse(paramsList.Last(), out intParam2);
-            object objCar = Activator.CreateInstance(type);
+            stringParam2 = paramsList.Last();
+
+            object objWord = Activator.CreateInstance(type);
             if (paramsList.Count() != 0)
-            {
-                method.Invoke(objCar, new object[] { stringParam1, intParam2});
-            }
+                method.Invoke(objWord, new object[] { stringParam1, stringParam2 });
             else
-            {
-                method.Invoke(objCar, new object[] { }); // Провереям кол-во параметров и передаем в метод
-            }
+                method.Invoke(objWord, new object[] { });
         }
         
-        // // Cоздает объект переданного типа и возвращает
-        // // его пользователю
-        // public static object CreateObj(object obj)
-        // {
-        //     Type type = obj.GetType();
-        //     object result = Activator.CreateInstance(type);
-        //     return result;
-        // }
+        // Cоздает объект переданного типа и возвращает
+        // его пользователю
+        public static object CreateObj(object obj)
+        {
+            Type type = obj.GetType();
+            object result = Activator.CreateInstance(type);
+            return result;
+        }
         
     }
 }
