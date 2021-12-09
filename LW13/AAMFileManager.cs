@@ -9,60 +9,52 @@ namespace LW13
     {
         public static void AAMInspect()
         {
+            string classLogInfo = "\n<======================================   VADFileManager   ===========================================>\n";
             string inspectLog = "";
-            
+
+            DriveInfo[] drives = DriveInfo.GetDrives();
             DirectoryInfo directory = new DirectoryInfo(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13");
+
             directory.Create();
             directory.CreateSubdirectory(@"AAMInspect");
 
-            DirectoryInfo AAMInspectFiles =
-                new DirectoryInfo(
-                    Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect\AAMFiles"));
-            if (AAMInspectFiles.Exists)
-            {
-                AAMInspectFiles.Delete(true);
-            }
+            DirectoryInfo VADInspectFiles = new DirectoryInfo(Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect\AAMFiles"));
+            if (VADInspectFiles.Exists)
+                VADInspectFiles.Delete(true);
 
-            string filePath =
-                Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect\AAMFiles\aamdirinfo.txt");
+            string filePath = Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect\aamdirinfo.txt");
             FileInfo fileInfo = new FileInfo(filePath);
             using (StreamWriter sw = fileInfo.CreateText())
             {
-                sw.WriteLine("С наступающим НГ!!!");
+                sw.WriteLine("Happy New Year!");
                 sw.Close();
             }
 
-            string renamePath =
-                Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect\AAMFiles\aamdirinfo.txt");
-            FileInfo renameBuffer = new FileInfo(renamePath);
-            renameBuffer.Delete();
+
+            string renamePath = Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect\aamdirinfoRENAMED.txt");
+            FileInfo renameBuf = new FileInfo(renamePath);
+            renameBuf.Delete();
 
             fileInfo.CopyTo(renamePath);
             fileInfo.Delete();
 
 
-            DirectoryInfo inspectDirInfo =
-                new DirectoryInfo(Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect"));
+            DirectoryInfo inspectDirInfo = new DirectoryInfo(Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect"));
             string files = "";
-            for (int i = 0; i < inspectDirInfo.GetFiles()[i].Length; i++)
-            {
-                files += inspectDirInfo.GetFiles()[i].Name + " ;";
-            }
+            for (int i = 0; i < inspectDirInfo.GetFiles().Length; i++)
+                files += inspectDirInfo.GetFiles()[i].Name + "; ";
 
             string directories = "";
             for (int i = 0; i < inspectDirInfo.GetDirectories().Length; i++)
-            {
                 directories += inspectDirInfo.GetDirectories()[i];
-            }
 
             if (inspectDirInfo.Exists)
-            {
-                inspectLog = "\n<=========================================== AAMFileManager =============================================>" +
+                inspectLog = classLogInfo +
                              "\nФайлы:                    " + files +
                              "\nПоддиректории:            " + directories +
                              "\nРодительский директорий:  " + inspectDirInfo.Parent.Name;
-            }
-            
+
+
             AAMLog.WriteInLog(inspectLog);
         }
 
@@ -76,7 +68,8 @@ namespace LW13
                 Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect\AAMUnzip");
             string ZipPath =
                 Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect\AAMFiles.zip");
-            string musicPath = Path.GetFullPath(@"D:\Music");
+            string musicPath = 
+                Path.GetFullPath(@"D:\Music");
 
             DirectoryInfo AAMFiles = new DirectoryInfo(AAMFilesPath);
             DirectoryInfo AAMInspectFiles = new DirectoryInfo(AAMInspectFilesPath);
@@ -151,7 +144,7 @@ namespace LW13
             }
             AAMInspectUnzip.Create();
 
-            // Разархивацияы
+            // Разархивация
             using (ZipArchive archive = ZipFile.OpenRead(ZipPath))
             {
                 var result = from entry in archive.Entries

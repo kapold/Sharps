@@ -150,8 +150,8 @@ namespace LW12
                     sw.WriteLine(res.Name);
                 // Task 2
                 sw.WriteLine("\nTask 2:");
-                sw.WriteLine("Parameters");
-                sw.WriteLine("Mercedes E320");
+                sw.WriteLine("parameters");
+                sw.WriteLine("Sapper Program");
             }
         }
 
