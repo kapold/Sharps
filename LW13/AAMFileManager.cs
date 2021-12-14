@@ -9,7 +9,7 @@ namespace LW13
     {
         public static void AAMInspect()
         {
-            string classLogInfo = "\n<======================================   VADFileManager   ===========================================>\n";
+            string classLogInfo = "\n<======================================   AAMFileManager   ===========================================>\n";
             string inspectLog = "";
 
             DriveInfo[] drives = DriveInfo.GetDrives();
