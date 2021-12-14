@@ -150,7 +150,7 @@ namespace LW12
                     sw.WriteLine(res.Name);
                 // Task 2
                 sw.WriteLine("\nTask 2:");
-                sw.WriteLine("parameters");
+                sw.WriteLine("Parameters");
                 sw.WriteLine("Sapper Program");
             }
         }
@@ -159,33 +159,25 @@ namespace LW12
         public static void InvokeClass(object obj, string methodName)
         {
             Type type = obj.GetType();
-            string filePath = @"D:\Универ 2 курс\Университет 3 семестр\ООП\LW12\info.txt";
+            string filePath = @"D:\Универ 2 курс\Университет 3 семестр\ООП\LW12\params.txt";
             string fileInf = "";
-            string strParams = "parameters";
-
-            using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
-                fileInf = sr.ReadToEnd();
-
-            int index = fileInf.IndexOf(strParams);
 
             List<string> paramsList = new List<string>();
-            string currentParam = "";
-            for (int i = index + strParams.Length + 2; i < fileInf.Length; i++)
+            using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
             {
-                if (fileInf[i] == ' ' || fileInf[i] == '\n')
+                while (!sr.EndOfStream)
                 {
-                    paramsList.Add(currentParam);
-                    currentParam = "";
+                    string symbol = sr.ReadLine();
+                    paramsList.Add(symbol);
                 }
-                else
-                    currentParam += fileInf[i];
             }
-
+            
             var method = type.GetMethod(methodName);
             string stringParam1 = "";
             string stringParam2 = "";
             stringParam1 = paramsList.First();
             stringParam2 = paramsList.Last();
+
 
             object objWord = Activator.CreateInstance(type);
             if (paramsList.Count() != 0)
@@ -202,6 +194,40 @@ namespace LW12
             object result = Activator.CreateInstance(type);
             return result;
         }
-        
+        /*
+        Type type = obj.GetType();
+        string filePath = @"D:\Универ 2 курс\Университет 3 семестр\ООП\LW12\info.txt";
+        string fileInf = "";
+        string strParams = "parameters";
+
+            using (StreamReader sr = new StreamReader(filePath, Encoding.Default))
+        fileInf = sr.ReadToEnd();
+
+        int index = fileInf.IndexOf(strParams);
+
+        List<string> paramsList = new List<string>();
+        string currentParam = "";
+            for (int i = index + strParams.Length + 2; i < fileInf.Length; i++)
+        {
+            if (fileInf[i] == ' ' || fileInf[i] == '\n')
+            {
+                paramsList.Add(currentParam);
+                currentParam = "";
+            }
+            else
+                currentParam += fileInf[i];
+        }
+
+        var method = type.GetMethod(methodName);
+        string stringParam1 = "";
+        string stringParam2 = "";
+        stringParam1 = paramsList.First();
+        stringParam2 = paramsList.Last();
+
+        object objWord = Activator.CreateInstance(type);
+            if (paramsList.Count() != 0)
+        method.Invoke(objWord, new object[] { stringParam1, stringParam2 });
+        else
+        method.Invoke(objWord, new object[] { });*/
     }
 }
