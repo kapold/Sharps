@@ -18,9 +18,9 @@ namespace LW13
             directory.Create();
             directory.CreateSubdirectory(@"AAMInspect");
 
-            DirectoryInfo VADInspectFiles = new DirectoryInfo(Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect\AAMFiles"));
-            if (VADInspectFiles.Exists)
-                VADInspectFiles.Delete(true);
+            DirectoryInfo AAMInspectFiles = new DirectoryInfo(Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect\AAMFiles"));
+            if (AAMInspectFiles.Exists)
+                AAMInspectFiles.Delete(true);
 
             string filePath = Path.GetFullPath(@"D:\Универ 2 курс\Университет 3 семестр\ООП\LW13\LW13\AAMInspect\aamdirinfo.txt");
             FileInfo fileInfo = new FileInfo(filePath);
